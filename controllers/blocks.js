@@ -25,19 +25,17 @@ module.exports.saveBlockAttributes = (req, res, next) => {
         Block.findOneAndUpdate(
             { id: id }, //ищет блок по этому параметру
             { $set: { items: items } }, //устанавливает новый массив items вместо старого
-            { upsert: true, returnDocument: "after" } //если блока с таким id нет - создаёт. параметр returnDocument позволяет возвращать в then новый объект после его создания. иначе будет null
+            { upsert: true, returnDocument: "after" } //если блока с таким id нет - создаёт. Пар. returnDocument позволяет возвращать в then новый объект после его создания. Иначе будет null
         )
             .then((block) => {
-            res.send(block)
-            console.log(block);
-            }
-            )
+                res.send(block)
+            })
             .catch((err) => {
                 res.status(500).send({ message: 'Ошибка обработки запроса' })
                 next(err);
             });
     } else {
-
+        
         res.send({ message: 'Нет массива услуг для сохранения в базе' })
     }
 };
